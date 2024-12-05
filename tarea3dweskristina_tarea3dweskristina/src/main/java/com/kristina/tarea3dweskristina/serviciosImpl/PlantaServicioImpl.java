@@ -2,6 +2,7 @@ package com.kristina.tarea3dweskristina.serviciosImpl;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kristina.tarea3dweskristina.modelo.Planta;
@@ -11,7 +12,7 @@ import com.kristina.tarea3dweskristina.servicios.PlantaServicio;
 @Service
 public class PlantaServicioImpl implements PlantaServicio{
 	
-	
+	@Autowired
 	  private final PlantaRepository plantaRepository;
 
 	  public PlantaServicioImpl(PlantaRepository plantaRepository) {
