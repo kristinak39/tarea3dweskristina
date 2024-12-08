@@ -1,29 +1,26 @@
 package com.kristina.tarea3dweskristina;
 
+import java.util.Scanner;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.stereotype.Component;
 
-import com.kristina.tarea3dweskristina.serviciosImpl.PlantaServicioImpl;
+import com.kristina.tarea3dweskristina.fachada.ViveroFachada;
 
-public class Principal implements CommandLineRunner{
+@Component
+public class Principal implements CommandLineRunner {
 
-	
 	@Autowired
-	private PlantaServicioImpl plantaServicio;
-	
-	
+	private ViveroFachada viveroFachada;
+
 	@Override
 	public void run(String... args) throws Exception {
-		
-		System.out.println("INI");
-		
-		
-		System.out.println(plantaServicio.findAll());
-		
-		
-		
-		System.out.println("FIN");
-		
+
+		System.out.println("=== Bienvenido al Sistema de Gestión del Vivero ===");
+		viveroFachada.iniciarSistema();
+		System.out.println("=== Sistema Finalizado ===");
+
 	}
 
 }

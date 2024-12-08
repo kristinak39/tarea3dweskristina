@@ -1,53 +1,39 @@
 package com.kristina.tarea3dweskristina.modelo;
 
-import java.io.Serializable;
-import java.util.LinkedList;
 import java.util.List;
 
-import jakarta.persistence.*;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "plantas")
-public class Planta implements Serializable {
-
-	private static final long serialVersionUID = 1L;
-
+public class Planta {
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
-
-	@Column(unique = true)
+	@Column(nullable = false, unique = true)
 	private String codigo;
 
-	@Column
+	@Column(nullable = false)
 	private String nombreComun;
 
-	@Column
+	@Column(nullable = false)
 	private String nombreCientifico;
 
-	@OneToMany(cascade = CascadeType.ALL)
-	@JoinColumn
-	private List<Ejemplar> ejemplares = new LinkedList<Ejemplar>();
+	@OneToMany(mappedBy = "planta", cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<Ejemplar> ejemplares;
 
 	public Planta() {
-		super();
+
 	}
 
-	public Planta(Long id, String codigo, String nombreComun, String nombreCientifico, List<Ejemplar> ejemplares) {
+	public Planta(String codigo, String nombreComun, String nombreCientifico) {
 		super();
-		this.id = id;
 		this.codigo = codigo;
 		this.nombreComun = nombreComun;
 		this.nombreCientifico = nombreCientifico;
-		this.ejemplares = ejemplares;
-	}
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
 	}
 
 	public String getCodigo() {
@@ -80,15 +66,6 @@ public class Planta implements Serializable {
 
 	public void setEjemplares(List<Ejemplar> ejemplares) {
 		this.ejemplares = ejemplares;
-	}
-
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
-
-	@Override
-	public String toString() {
-		return "Id: " + id + " | codigo: " + codigo + " | nombre comun: " + nombreComun;
 	}
 
 }
