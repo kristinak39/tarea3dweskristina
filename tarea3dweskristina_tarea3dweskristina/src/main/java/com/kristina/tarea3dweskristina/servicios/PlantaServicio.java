@@ -2,6 +2,7 @@ package com.kristina.tarea3dweskristina.servicios;
 
 import java.util.List;
 
+
 import com.kristina.tarea3dweskristina.modelo.Planta;
 
 public interface PlantaServicio {
@@ -14,5 +15,5 @@ public interface PlantaServicio {
 
 	Planta buscarPorCodigo(String codigo);
 	
-	boolean modificarNombresPlanta(String codigo, String nuevoNombreComun, String nuevoNombreCientifico);
+	Planta modificarNombresPlanta(String codigo, String nuevoNombreComun, String nuevoNombreCientifico);
 }

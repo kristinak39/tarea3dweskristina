@@ -12,9 +12,11 @@ import com.kristina.tarea3dweskristina.modelo.Ejemplar;
 public interface EjemplarRepository extends JpaRepository<Ejemplar, Long> {
 
 	@Query("SELECT e FROM Ejemplar e WHERE e.planta.codigo IN :codigosPlanta")
-	List<Ejemplar> findByPlantaCodigoIn(List<String> codigosPlanta); // Filtrar ejemplares por planta
+	List<Ejemplar> findByPlantaCodigoIn(List<String> codigosPlanta);
 
 	@Query("SELECT e.nombre AS nombre, COUNT(m.id) AS numMensajes, MAX(m.fechaHora) AS ultimoMensaje "
 			+ "FROM Ejemplar e LEFT JOIN e.mensajes m " + "WHERE e.planta.codigo IN :codigosPlanta " + "GROUP BY e.id")
-	List<Object[]> obtenerEjemplaresFiltrados(List<String> codigosPlanta); // Filtrar y agrupar mensajes
+	List<Object[]> obtenerEjemplaresFiltrados(List<String> codigosPlanta); 
+	
+	
 }

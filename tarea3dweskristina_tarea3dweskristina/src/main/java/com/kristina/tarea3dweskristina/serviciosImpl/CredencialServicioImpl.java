@@ -25,23 +25,27 @@ public class CredencialServicioImpl implements CredencialServicio {
 
     @Override
     public boolean existeEmail(String email) {
-        // Usar PersonaRepository para verificar el email
+        // usa PersonaRepository para verificar el email
         return personaRepository.existsByEmail(email);
     }
 
     @Override
     public Credenciales autenticar(String usuario, String password) {
-        // Buscar credenciales con usuario y password
-        return credencialRepository.findByUsuarioAndPassword(usuario, password);
+    	System.out.println("Usuario ingresado: " + usuario + ", Contraseña ingresada: " + password);
+       Credenciales credenciales = credencialRepository.findByUsuarioAndPassword(usuario, password);
+       if(credenciales == null) {
+    	   throw new RuntimeException("Usuario o contraseña incorrectos");
+       }
+        return credenciales;
     }
 
     @Override
     public Credenciales registrarCredencial(String usuario, String password, Long personaId) {
-        // Buscar la persona por ID y lanzar excepción si no existe
+        // buscar la persona por ID y lanzar excepción si no existe
         var persona = personaRepository.findById(personaId)
                 .orElseThrow(() -> new RuntimeException("Persona no encontrada"));
 
-        // Crear nueva instancia de Credenciales y guardar en el repositorio
+        // crear nueva instancia de Credenciales y guardar en el repositorio
         Credenciales credenciales = new Credenciales(usuario, password, persona);
         return credencialRepository.save(credenciales);
     }

@@ -47,6 +47,14 @@ public class Mensaje {
 
 	
 
+	public Mensaje(String mensaje, LocalDateTime fechaHora, Ejemplar ejemplar, Persona persona) {
+	
+		this.mensaje = mensaje;
+		this.fechaHora = fechaHora;
+		this.ejemplar = ejemplar;
+		this.persona = persona;
+	}
+
 	public Mensaje(String mensaje, LocalDateTime fechaHora, Ejemplar ejemplar) {
 		this.mensaje = mensaje;
 		this.fechaHora = fechaHora;

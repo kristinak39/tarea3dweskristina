@@ -8,5 +8,7 @@ public interface EjemplarServicio {
 
 	List<Ejemplar> buscarPorPlantas(List<String> codigoPlanta);
 
-	Ejemplar registrarEjemplar(String nombre, String codigoPlanta);
+	Ejemplar registrarEjemplar(String codigoPlanta);
+	
+	boolean existeEmail(String email);
 }

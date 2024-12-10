@@ -11,5 +11,5 @@ public interface MensajeServicio {
 
 	List<Mensaje> buscarPorRangoDeFechas(LocalDateTime inicio, LocalDateTime fin);
 
-	Mensaje registrarMensaje(String contenido, Long ejemplarId);
+	Mensaje registrarMensaje(String contenido, Long ejemplarId, Long personaId);
 }

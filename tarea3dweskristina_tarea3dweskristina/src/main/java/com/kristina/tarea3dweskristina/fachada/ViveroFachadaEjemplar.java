@@ -6,12 +6,13 @@ import java.util.Scanner;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.kristina.tarea3dweskristina.modelo.Ejemplar;
 import com.kristina.tarea3dweskristina.servicios.EjemplarServicio;
 
 @Component
 public class ViveroFachadaEjemplar {
 	
-	Scanner in = new Scanner(System.in);
+	private final Scanner in = new Scanner(System.in);
 	
 	@Autowired
 	private EjemplarServicio ejemplarServ;
@@ -32,11 +33,11 @@ public class ViveroFachadaEjemplar {
 	                    break;
 	                case "3":
 	                    System.out.println("Volviendo al menú principal...");
-	                    break;
+	                    return;
 	                default:
 	                    System.out.println("Opción no válida, intente nuevamente.");
 	            }
-	        } while (!opcion.equals("3"));
+	        } while (true);
 	    }
 	 
 	  private void mostrarMenuEjemplares() {
@@ -48,28 +49,37 @@ public class ViveroFachadaEjemplar {
 	    }
 	  
 	  private void registrarEjemplar() {
-	        System.out.print("Ingrese el nombre del ejemplar: ");
-	        String nombre = in.nextLine();
-	        System.out.print("Ingrese el código de la planta asociada: ");
-	        String codigoPlanta = in.nextLine();
+		    System.out.print("Ingrese el código de la planta asociada: ");
+		    String codigoPlanta = in.nextLine().trim();
 
-	        try {
-	            ejemplarServ.registrarEjemplar(nombre, codigoPlanta);
-	            System.out.println("Ejemplar registrado con éxito.");
-	        } catch (RuntimeException e) {
-	            System.out.println("Error al registrar el ejemplar: " + e.getMessage());
-	        }
-	    }
+		    try {
+		        // Registrar el ejemplar
+		        Ejemplar ejemplar = ejemplarServ.registrarEjemplar(codigoPlanta);
+		        System.out.println("Ejemplar registrado con éxito. Nombre generado: " + ejemplar.getNombre());
+		    } catch (RuntimeException e) {
+		        System.out.println("Error al registrar el ejemplar: " + e.getMessage());
+		    }
+		}
+
+
 
 	  private void listarEjemplaresPorPlanta() {
-	        System.out.print("Ingrese el código de la planta: ");
-	        String codigoPlanta = in.nextLine();
+		    System.out.print("Ingrese el código de la planta: ");
+		    String codigoPlanta = in.nextLine().trim();
 
-	        var ejemplares = ejemplarServ.buscarPorPlantas(List.of(codigoPlanta));
-	        if (!ejemplares.isEmpty()) {
-	            ejemplares.forEach(ejemplar -> System.out.println(ejemplar.getId() + " - " + ejemplar.getNombre()));
-	        } else {
-	            System.out.println("No se encontraron ejemplares para la planta especificada.");
-	        }
-	    }
+		    try {
+		        var ejemplares = ejemplarServ.buscarPorPlantas(List.of(codigoPlanta));
+		        if (!ejemplares.isEmpty()) {
+		            System.out.println("\n=== Ejemplares Asociados ===");
+		            ejemplares.forEach(ejemplar -> 
+		                System.out.printf("ID: %d | Nombre: %s%n", ejemplar.getId(), ejemplar.getNombre())
+		            );
+		        } else {
+		            System.out.println("No se encontraron ejemplares para la planta especificada.");
+		        }
+		    } catch (RuntimeException e) {
+		        System.out.println("Error: " + e.getMessage());
+		    }
+		}
+
 	}

@@ -1,5 +1,6 @@
 package com.kristina.tarea3dweskristina.modelo;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import jakarta.persistence.CascadeType;
@@ -25,11 +26,12 @@ public class Ejemplar {
 	private String nombre;
 
 	@ManyToOne
-	@JoinColumn(name = "planta_codigo", nullable = false)
+	@JoinColumn(name = "planta_codigo", referencedColumnName = "codigo", nullable = false)
 	private Planta planta;
-
+	
 	@OneToMany(mappedBy = "ejemplar", cascade = CascadeType.ALL, orphanRemoval = true)
-	private List<Mensaje> mensajes;
+	private List<Mensaje> mensajes = new ArrayList<>(); 
+
 
 	public Ejemplar() {
 
@@ -40,12 +42,7 @@ public class Ejemplar {
 		this.planta = planta;
 	}
 
-	public Ejemplar(Long id, String nombre, Planta planta, List<Mensaje> mensajes) {
-		this.id = id;
-		this.nombre = nombre;
-		this.planta = planta;
-		this.mensajes = mensajes;
-	}
+
 
 	public Long getId() {
 		return id;
