@@ -8,9 +8,7 @@ import com.kristina.tarea3dweskristina.modelo.Credenciales;
 @Repository
 public interface CredencialRepository extends JpaRepository<Credenciales, Long> {
 
-   
-    boolean existsByUsuario(String usuario);
+	boolean existsByUsuario(String usuario);
 
-  
-    Credenciales findByUsuarioAndPassword(String usuario, String password);
+	Credenciales findByUsuarioAndPassword(String usuario, String password);
 }

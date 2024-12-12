@@ -22,35 +22,40 @@ public class MensajeServicioImpl implements MensajeServicio {
 
 	@Autowired
 	private EjemplarRepository ejemplarRepository;
+
 	@Autowired
 	private PersonaRepository personaRepository;
 
 	@Override
-	public List<Mensaje> buscarPorEjemplar(Long ejemplarId) {
-		return mensajeRepository.findByEjemplarId(ejemplarId);
-	}
+	public Mensaje registrarMensaje(String contenido, Long ejemplarId, Long personaId) {
+		Ejemplar ejemplar = ejemplarRepository.findById(ejemplarId)
+				.orElseThrow(() -> new RuntimeException("El ejemplar especificado no existe."));
 
-	
+		Persona persona = personaRepository.findById(personaId)
+				.orElseThrow(() -> new RuntimeException("La persona especificada no existe."));
+
+		Mensaje mensaje = new Mensaje(contenido, LocalDateTime.now(), ejemplar, persona);
+		return mensajeRepository.save(mensaje);
+	}
 
 	@Override
-	public Mensaje registrarMensaje(String contenido, Long ejemplarId, Long personaId) {
-	    Ejemplar ejemplar = ejemplarRepository.findById(ejemplarId)
-	            .orElseThrow(() -> new RuntimeException("El ejemplar especificado no existe."));
-	    
-	    Persona persona = personaRepository.findById(personaId)
-	            .orElseThrow(() -> new RuntimeException("La persona especificada no existe."));
-	    
-	    Mensaje mensaje = new Mensaje(contenido, LocalDateTime.now(), ejemplar, persona);
-	    return mensajeRepository.save(mensaje);
+	public List<Mensaje> buscarPorPersona(Long personaId) {
+		return mensajeRepository.findByPersonaId(personaId);
 	}
-
-
 
 	@Override
 	public List<Mensaje> buscarPorRangoDeFechas(LocalDateTime inicio, LocalDateTime fin) {
 		return mensajeRepository.findByFechaHoraBetween(inicio, fin);
 	}
 
-	
+	@Override
+	public List<Mensaje> buscarPorTipoDePlanta(String tipoPlanta) {
+		return mensajeRepository.findByPlantaTipo(tipoPlanta);
+	}
+
+	@Override
+	public List<Mensaje> obtenerMensajesPorEjemplar(Long idEjemplar) {
+		return mensajeRepository.findMensajesByEjemplarId(idEjemplar);
+	}
 
 }

@@ -13,11 +13,11 @@ import com.kristina.tarea3dweskristina.modelo.Planta;
 @Repository
 public interface PlantaRepository extends JpaRepository<Planta, String> {
 
-    List<Planta> findAllByOrderByNombreComunAsc(); 
+	List<Planta> findAllByOrderByNombreComunAsc();
 
-    boolean existsByCodigo(String codigo); 
+	boolean existsByCodigo(String codigo);
 
-    @Query("SELECT p FROM Planta p WHERE p.codigo = :codigo")
-    Optional<Planta> findByCodigoIgnoreCase(@Param("codigo") String codigo);
+	@Query("SELECT p FROM Planta p WHERE p.codigo = :codigo")
+	Optional<Planta> findByCodigoIgnoreCase(@Param("codigo") String codigo);
 
 }

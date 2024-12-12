@@ -8,7 +8,7 @@ import org.springframework.context.annotation.ComponentScan;
 @SpringBootApplication
 
 public class Tarea3dweskristinaApplication {
-	
+
 	@Bean
 	public Principal applicationStartupRunner() {
 		return new Principal();

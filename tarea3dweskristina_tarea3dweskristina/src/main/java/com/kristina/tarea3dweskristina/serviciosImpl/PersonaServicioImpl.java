@@ -20,11 +20,11 @@ public class PersonaServicioImpl implements PersonaServicio {
 
 	@Override
 	public Persona registrarPersona(String nombre, String email) {
-		// para que el formato sea valido
+
 		if (!email.matches("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$")) {
 			throw new RuntimeException("Formato de email inválido: " + email);
 		}
-		//que no este registrado previamente
+
 		if (personaRepository.existsByEmail(email)) {
 			throw new RuntimeException("El email ya esta registrado: " + email);
 		}

@@ -11,42 +11,41 @@ import com.kristina.tarea3dweskristina.servicios.CredencialServicio;
 @Service
 public class CredencialServicioImpl implements CredencialServicio {
 
-    @Autowired
-    private CredencialRepository credencialRepository;
+	@Autowired
+	private CredencialRepository credencialRepository;
 
-    @Autowired
-    private PersonaRepository personaRepository;
+	@Autowired
+	private PersonaRepository personaRepository;
 
-    @Override
-    public boolean existeUsuario(String usuario) {
-        // Corrección del método: usar existsByUsuario
-        return credencialRepository.existsByUsuario(usuario);
-    }
+	@Override
+	public boolean existeUsuario(String usuario) {
 
-    @Override
-    public boolean existeEmail(String email) {
-        // usa PersonaRepository para verificar el email
-        return personaRepository.existsByEmail(email);
-    }
+		return credencialRepository.existsByUsuario(usuario);
+	}
 
-    @Override
-    public Credenciales autenticar(String usuario, String password) {
-    	System.out.println("Usuario ingresado: " + usuario + ", Contraseña ingresada: " + password);
-       Credenciales credenciales = credencialRepository.findByUsuarioAndPassword(usuario, password);
-       if(credenciales == null) {
-    	   throw new RuntimeException("Usuario o contraseña incorrectos");
-       }
-        return credenciales;
-    }
+	@Override
+	public boolean existeEmail(String email) {
 
-    @Override
-    public Credenciales registrarCredencial(String usuario, String password, Long personaId) {
-        // buscar la persona por ID y lanzar excepción si no existe
-        var persona = personaRepository.findById(personaId)
-                .orElseThrow(() -> new RuntimeException("Persona no encontrada"));
+		return personaRepository.existsByEmail(email);
+	}
 
-        // crear nueva instancia de Credenciales y guardar en el repositorio
-        Credenciales credenciales = new Credenciales(usuario, password, persona);
-        return credencialRepository.save(credenciales);
-    }
+	@Override
+	public Credenciales autenticar(String usuario, String password) {
+		System.out.println("Usuario ingresado: " + usuario + ", Contraseña ingresada: " + password);
+		Credenciales credenciales = credencialRepository.findByUsuarioAndPassword(usuario, password);
+		if (credenciales == null) {
+			throw new RuntimeException("Usuario o contraseña incorrectos");
+		}
+		return credenciales;
+	}
+
+	@Override
+	public Credenciales registrarCredencial(String usuario, String password, Long personaId) {
+
+		var persona = personaRepository.findById(personaId)
+				.orElseThrow(() -> new RuntimeException("Persona no encontrada"));
+
+		Credenciales credenciales = new Credenciales(usuario, password, persona);
+		return credencialRepository.save(credenciales);
+	}
 }

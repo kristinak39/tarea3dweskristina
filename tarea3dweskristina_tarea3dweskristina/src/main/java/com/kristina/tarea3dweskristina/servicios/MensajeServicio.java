@@ -7,9 +7,14 @@ import com.kristina.tarea3dweskristina.modelo.Mensaje;
 
 public interface MensajeServicio {
 
-	List<Mensaje> buscarPorEjemplar(Long ejemplarId);
+	Mensaje registrarMensaje(String contenido, Long ejemplarId, Long personaId);
+
+	List<Mensaje> buscarPorPersona(Long personaId);
 
 	List<Mensaje> buscarPorRangoDeFechas(LocalDateTime inicio, LocalDateTime fin);
 
-	Mensaje registrarMensaje(String contenido, Long ejemplarId, Long personaId);
+	List<Mensaje> buscarPorTipoDePlanta(String tipoPlanta);
+
+	List<Mensaje> obtenerMensajesPorEjemplar(Long idEjemplar);
+
 }

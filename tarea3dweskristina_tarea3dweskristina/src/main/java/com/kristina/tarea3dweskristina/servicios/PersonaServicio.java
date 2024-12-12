@@ -7,6 +7,5 @@ public interface PersonaServicio {
 	Persona buscarPorEmail(String email);
 
 	Persona registrarPersona(String nombre, String email);
-	
-	
+
 }
